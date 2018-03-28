@@ -6,10 +6,10 @@
 	<display-name>Archetype Created Web Application</display-name>
 
 	<servlet>
-		<servlet-name>ListerCollaborateursController</servlet-name>
-		<display-name>ListerCollaborateursController</display-name>
+		<servlet-name>ListerCollaborateurController</servlet-name>
+		<display-name>ListerCollaborateurController</display-name>
 		<description></description>
-		<servlet-class>dev.sgp.web.ListerCollaborateursController</servlet-class>
+		<servlet-class>dev.sgp.web.ListerCollaborateurController</servlet-class>
 	</servlet>
 
 	<servlet>
@@ -27,7 +27,7 @@
 	</servlet>
 	
 	<servlet-mapping>
-		<servlet-name>ListerCollaborateursController</servlet-name>
+		<servlet-name>ListerCollaborateurController</servlet-name>
 		<url-pattern>/collaborateurs/lister</url-pattern>
 	</servlet-mapping>
 

@@ -1,4 +1,5 @@
-<%@ page language="java" pageEncoding="UTF-8"%>
+
+<% String path = request.getContextPath(); %>
 <header>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<a class="navbar-brand" href="#">LOG</a>
@@ -10,12 +11,12 @@
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav">
 				<li class="nav-item active"><a class="nav-link"
-					href="./index.html">Collaborateurs <span class="sr-only">(current)</span>
+					href="<%= path %>/collaborateurs/lister">Collaborateurs</span>
 				</a></li>
 				<li class="nav-item"><a class="nav-link"
-					href="./afficher-stats.html">Statistiques</a></li>
+					href="<%= path %>/statistiques/lister">Statistiques</a></li>
 				<li class="nav-item"><a class="nav-link"
-					href="./afficher-activites.html">ActivitÃ©s</a></li>
+					href="<%= path %>/activites/lister">Activités</a></li>
 			</ul>
 		</div>
 	</nav>

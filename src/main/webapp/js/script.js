@@ -60,10 +60,10 @@ var createCollaborateurProcess = event => {
       telephone: "inconnu"      
     };
     addColab(collab, () => {
-      redirectTo("editer-collab.html?secu=" + collab.numeroSecu);
+      redirectTo("/collaborateurs/editer?secu=" + collab.numeroSecu);
     });
   } else {
-    redirectTo("creer-collab.html?errors");
+    redirectTo("/collaborateurs/creer?errors");
   }
 };
 

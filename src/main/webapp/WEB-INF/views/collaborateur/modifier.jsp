@@ -1,19 +1,24 @@
+<%@page import="java.time.ZonedDateTime"%>
+<%@page import="java.time.format.DateTimeFormatter"%>
+<%@page import="javax.swing.text.DateFormatter"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.time.LocalDate"%>
+<%@page import="dev.sgp.entite.Collaborateur"%>
+<%@page import="dev.sgp.entite.Departement"%>
 <%@page import="java.util.List"%>
 
 <%@ include file="/WEB-INF/views/templates/base-header.jsp"%>
 <%@ include file="/WEB-INF/views/templates/header.jsp"%>
 
-<h1>Modifier</h1>
-<p>
-	<%=request.getAttribute("collaborateur").toString()%>
-</p>
+<%
+	Collaborateur c = (Collaborateur) request.getAttribute("collaborateur");
+%>
 
 <section class="mt-3 mx-5">
 	<div class="row">
 		<div class="col-12 col-lg-3 mt-5">
-			<img
-				src="http://cheb-room.ru/uploads/cheb/2016/11/w9RC4W-QqXw-200x200.jpg"
-				class="rounded mx-auto d-block" alt="omer">
+			<img src="<%=c.getPhoto()%>" class="rounded mx-auto d-block"
+				alt="photo">
 		</div>
 		<div class="col-12 col-lg-9">
 			<div class="row">
@@ -23,13 +28,17 @@
 				<div class="col-12 col-lg-6 mt-3">
 					<div class="custom-control custom-checkbox">
 						<input type="checkbox" class="custom-control-input"
-							id="customCheck1"> <label class="custom-control-label"
-							for="customCheck1">Désactiver</label>
+							id="customCheck1" name="input-active" value="1" <%= c.getEstActif() ? "" : "checked" %>> <label
+							class="custom-control-label" for="customCheck1">Désactiver</label>
 					</div>
 				</div>
 			</div>
 
-			<form id="edit-form" class="needs-validation" methode="put" action="<%= request.getContextPath()%>/collabotateur-process?id=/<%= request.getAttribute("id") %>" novalidate>
+			<form id="edit-form" class="needs-validation" method="post"
+				action="<%=request.getContextPath()%>/collaborateurs-process"
+				novalidate>
+				<input type="hidden" name="_method" value="PUT" form="edit-form"/>
+				<input type="hidden" name="_matricule" value="<%= c.getMatricule() %>" form="edit-form"/>
 				<div id="accordion">
 					<div class="card">
 						<div class="card-header" id="headingOne">
@@ -46,7 +55,8 @@
 								<div class="form-group row">
 									<label for="input-civilite" class="col-sm-3 col-form-label">Civilité</label>
 									<div class="col-sm-9">
-										<select id="input-civilite" class="custom-select">
+										<select id="input-civilite" name="input-civilite"
+											class="custom-select">
 											<option value="1">Madame</option>
 											<option value="2">Monsieur</option>
 										</select>
@@ -56,17 +66,16 @@
 									<label for="input-nom" class="col-sm-3 col-form-label">Nom</label>
 									<div class="col-sm-9">
 										<input type="text" class="form-control" id="input-nom"
-											placeholder="Nom" required>
-										<div class="invalid-feedback">Le nom est obligatoire</div>
+											name="input-nom" placeholder="Nom" value="<%=c.getNom()%>"
+											disabled>
 									</div>
 								</div>
 								<div class="form-group row">
 									<label for="input-prenom" class="col-sm-3 col-form-label">Prénom</label>
 									<div class="col-sm-9">
 										<input type="text" class="form-control" id="input-prenom"
-											placeholder="Prénom" required>
-										<div class="invalid-feedback">Le prénom est obligatoire
-										</div>
+											name="input-nom" placeholder="Prénom"
+											value="<%=c.getPrenom()%>" disabled>
 									</div>
 								</div>
 								<div class="form-group row">
@@ -74,16 +83,16 @@
 										de naissance</label>
 									<div class="col-sm-9">
 										<input type="text" class="form-control" id="input-date"
-											placeholder="Date de naissance" required>
-										<div class="invalid-feedback">La date de naissance est
-											obligatoire</div>
+											name="input-date" placeholder="Date de naissance"
+											value="<%=c.getDateNaissance().format(DateTimeFormatter.ofPattern("dd-MM-YYYY"))%>"
+											disabled>
 									</div>
 								</div>
 								<div class="form-group row">
 									<label for="input-adresse" class="col-sm-3 col-form-label">Adresse</label>
 									<div class="col-sm-9">
-										<textarea class="form-control" id="input-adresse" rows="3"
-											placeholder="Adresse" required></textarea>
+										<textarea class="form-control" id="input-adresse"
+											name="input-adresse" rows="3" placeholder="Adresse" required>"<%=c.getAdresse()%></textarea>
 										<div class="invalid-feedback">L'adresse est obligatoire
 										</div>
 									</div>
@@ -93,7 +102,8 @@
 										de sécurité sociale</label>
 									<div class="col-sm-9">
 										<input type="text" class="form-control" id="input-secu"
-											placeholder="Numéro de sécurité sociale" required>
+											name="input-secu" placeholder="Numéro de sécurité sociale"
+											value="<%=c.getNumeroSecuriteSociale()%>" required>
 										<div class="invalid-feedback">Le numéro de sécurité
 											sociale est obligatoire</div>
 									</div>
@@ -102,7 +112,8 @@
 									<label for="input-tel" class="col-sm-3 col-form-label">Téléphone</label>
 									<div class="col-sm-9">
 										<input type="text" class="form-control" id="input-tel"
-											placeholder="Téléphone" required>
+											name="input-tel" placeholder="Téléphone"
+											value="<%=c.getPhone()%>" required>
 										<div class="invalid-feedback">Le numéro de téléphone est
 											obligatoire</div>
 									</div>
@@ -125,19 +136,32 @@
 								<div class="form-group row">
 									<label for="input-dep" class="col-sm-3 col-form-label">Département</label>
 									<div class="col-sm-9">
-										<select id="input-dep" class="custom-select">
-											<option value="1">Compta</option>
-											<option value="2">Rh</option>
-											<option value="3">R et D</option>
+										<select id="input-dep" name="input-dep" class="custom-select">
+											<%
+												List<Departement> departements = (List<Departement>) request.getAttribute("departements");
+												String selected = "";
+												for (Departement d : departements) {
+													if (null != c.getDepartement() && d.getId() == c.getDepartement().getId()) {
+														selected = "selected";
+													}
+											%>
+											<option value="<%=d.getId()%>" <%=selected%>><%=d.getName()%></option>
+											<%
+												}
+											%>
 										</select>
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="input-dep-nom" class="col-sm-3 col-form-label">Nom</label>
+									<label for="input-dep-nom" class="col-sm-3 col-form-label">Nom
+										du poste</label>
 									<div class="col-sm-9">
 										<input form="edit-form" type="text" class="form-control"
-											id="input-dep-nom" placeholder="Nom" required>
-										<div class="invalid-feedback">Le nom est obligatoire</div>
+											id="input-nom-poste" name="input-nom-poste"
+											placeholder="Nom du poste"
+											value="<%=c.getIntitulePoste()%>" required>
+										<div class="invalid-feedback">Le nom du poste est
+											obligatoire</div>
 									</div>
 								</div>
 							</div>
@@ -155,10 +179,21 @@
 							aria-labelledby="headingThree" data-parent="#accordion">
 							<div class="card-body">
 								<div class="form-group row">
+									<label for="input-banque" class="col-sm-3 col-form-label">Banque</label>
+									<div class="col-sm-9">
+										<input form="edit-form" type="text" class="form-control"
+											id="input-banque" name="input-banque"
+											placeholder="Nom de la banque" value="<%=c.getBanque()%>"
+											required>
+										<div class="invalid-feedback">Le banque est obligatoire</div>
+									</div>
+								</div>
+								<div class="form-group row">
 									<label for="input-iban" class="col-sm-3 col-form-label">IBAN</label>
 									<div class="col-sm-9">
 										<input form="edit-form" type="text" class="form-control"
-											id="input-iban" placeholder="Nom" required>
+											id="input-iban" name="input-iban" placeholder="Nom"
+											value="<%=c.getIban()%>" required>
 										<div class="invalid-feedback">L'IBAN est obligatoire</div>
 									</div>
 								</div>
@@ -166,7 +201,8 @@
 									<label for="input-bic" class="col-sm-3 col-form-label">BIC</label>
 									<div class="col-sm-9">
 										<input form="edit-form" type="text" class="form-control"
-											id="input-bic" placeholder="Nom" required>
+											id="input-bic" name="input-bic" placeholder="Nom"
+											value="<%=c.getBic()%>" required>
 										<div class="invalid-feedback">Le BIC est obligatoire</div>
 									</div>
 								</div>

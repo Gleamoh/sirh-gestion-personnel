@@ -13,19 +13,19 @@ import java.time.LocalDateTime;
 public class Collaborateur {
 	
 	/** matricule : String */
-	private String matricule;
+	private String matricule = "";
 	/** nom : String */
-	private String nom;
+	private String nom = "";
 	/** prenom : String */
-	private String prenom;
+	private String prenom = "";
 	/** adresse : String */
-	private String adresse;
+	private String adresse = "";
 	/** numeroSecuriteSociale : String */
-	private String numeroSecuriteSociale;
+	private String numeroSecuriteSociale = "";
 	/** emailProfessionnel : String */
-	private String emailProfessionnel;
+	private String emailProfessionnel = "";
 	/** photo : String */
-	private String photo;
+	private String photo = "";
 	/** dateNaissance : LocalDate */
 	private LocalDate dateNaissance;
 	/** dateHeureCreation : LocalDateTime */
@@ -33,14 +33,49 @@ public class Collaborateur {
 	/** estActif : Boolean */
 	private Boolean estActif;
 	/** intitulePoste : String */
-	private String intitulePoste;
+	private String intitulePoste = "";
 	/** departement : Departement */
 	private Departement departement;
+	/* banque : String */
+	private String banque = "";
+	/* bic : String */
+	private String bic = "";
+	/* iban : String */
+	private String iban = "";
+	/* phone : String */
+	private String phone = "";
 	
 	/** Constructor
 	 * 
 	 */
 	public Collaborateur() {
+	}
+
+
+	/** Constructor
+	 * @param matricule
+	 * @param nom
+	 * @param prenom
+	 * @param adresse
+	 * @param numeroSecuriteSociale
+	 * @param emailProfessionnel
+	 * @param photo
+	 * @param dateNaissance
+	 * @param dateHeureCreation
+	 */
+	public Collaborateur(String matricule, String nom, String prenom, String adresse, String numeroSecuriteSociale,
+			String emailProfessionnel, String photo, LocalDate dateNaissance, LocalDateTime dateHeureCreation, Boolean estActif) {
+		super();
+		this.matricule = matricule;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.adresse = adresse;
+		this.numeroSecuriteSociale = numeroSecuriteSociale;
+		this.emailProfessionnel = emailProfessionnel;
+		this.photo = photo;
+		this.dateNaissance = dateNaissance;
+		this.dateHeureCreation = dateHeureCreation;
+		this.estActif = estActif;
 	}
 
 
@@ -233,6 +268,70 @@ public class Collaborateur {
 	 */
 	public void setDepartement(Departement departement) {
 		this.departement = departement;
+	}
+
+
+	/** Getter
+	 * @return the banque
+	 */
+	public String getBanque() {
+		return banque;
+	}
+
+
+	/** Setter
+	 * @param banque the banque to set
+	 */
+	public void setBanque(String banque) {
+		this.banque = banque;
+	}
+
+
+	/** Getter
+	 * @return the bic
+	 */
+	public String getBic() {
+		return bic;
+	}
+
+
+	/** Setter
+	 * @param bic the bic to set
+	 */
+	public void setBic(String bic) {
+		this.bic = bic;
+	}
+
+
+	/** Getter
+	 * @return the iban
+	 */
+	public String getIban() {
+		return iban;
+	}
+
+
+	/** Setter
+	 * @param iban the iban to set
+	 */
+	public void setIban(String iban) {
+		this.iban = iban;
+	}
+
+
+	/** Getter
+	 * @return the phone
+	 */
+	public String getPhone() {
+		return phone;
+	}
+
+
+	/** Setter
+	 * @param phone the phone to set
+	 */
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 }

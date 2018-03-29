@@ -1,12 +1,11 @@
 package dev.sgp.web;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,10 +24,10 @@ import dev.sgp.util.RequestChecker;
  * Servlet implementation class EditerCollaborateurController
  */
 public class CollaborateurNavigatorController extends HttpServlet {
-	
+
 	public static CollaborateurService collabService = Constantes.COLLAB_SERVICE;
 	public static DepartementService depService = Constantes.DEP_SERVICE;
-	
+
 	public static final String CREER_ACTION = "creer";
 	public static final String MODIFIER_ACTION = "modifier";
 	public static final String LISTER_ACTION = "lister";
@@ -71,34 +70,15 @@ public class CollaborateurNavigatorController extends HttpServlet {
 			switch (requestAction) {
 
 			case CREER_ACTION: {
-				RequestDispatcher dispatcher = this.getServletContext()
-						.getRequestDispatcher("/WEB-INF/views/" + routes.get(requestAction));
-				dispatcher.forward(request, response);
+				doCreer(request, response);
 				break;
 			}
 			case MODIFIER_ACTION: {
-				String param = request.getParameter("id");
-				if (false == RequestChecker.isNullOrEmptyParameter(param)) {
-					request.setAttribute("collaborateur", getCollaborateur(param));
-					RequestDispatcher dispatcher = this.getServletContext()
-							.getRequestDispatcher("/WEB-INF/views/" + routes.get(requestAction));
-					dispatcher.forward(request, response);
-				} else {
-					response.sendError(404, "Identifiant de collaborateur incorrecte");
-				}
+				doModifier(request, response);
 				break;
 			}
 			case LISTER_ACTION: {
-				
-				List<Collaborateur> collaborateurs = collabService.listerCollaborateurs();
-				List<Departement> departements = depService.listerDepartement();
-				request.setAttribute("collaborateurs", collaborateurs);
-				request.setAttribute("departements", departements);
-				
-				RequestDispatcher dispatcher = this.getServletContext()
-						.getRequestDispatcher("/WEB-INF/views/" + routes.get(requestAction));
-				dispatcher.forward(request, response);
-					        
+				doLister(request, response);
 				break;
 			}
 			default:
@@ -133,8 +113,8 @@ public class CollaborateurNavigatorController extends HttpServlet {
 	 * @param id
 	 * @return : Collaborateur
 	 */
-	private Collaborateur getCollaborateur(String id) {
-		return new Collaborateur();
+	private Optional<Collaborateur> getCollaborateur(String id) {
+		return collabService.listerCollaborateurs().stream().filter(c -> c.getMatricule().equals(id)).findFirst();
 	}
 
 	/**
@@ -142,5 +122,49 @@ public class CollaborateurNavigatorController extends HttpServlet {
 	 */
 	private List<Collaborateur> getList() {
 		return new ArrayList<Collaborateur>();
+	}
+
+	private void doCreer(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		RequestDispatcher dispatcher = this.getServletContext()
+				.getRequestDispatcher("/WEB-INF/views/" + routes.get(CREER_ACTION));
+		dispatcher.forward(request, response);
+	}
+
+	private void doModifier(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		String param = request.getParameter("id");
+		
+		if (false == RequestChecker.isNullOrEmptyParameter(param)) {
+			Optional<Collaborateur> optional = getCollaborateur(param);
+		
+			if(optional.isPresent()) {
+				request.setAttribute("collaborateur", optional.get());
+				
+				List<Departement> departements = depService.listerDepartement();
+				request.setAttribute("departements", departements);
+				
+				RequestDispatcher dispatcher = this.getServletContext()
+						.getRequestDispatcher("/WEB-INF/views/" + routes.get(MODIFIER_ACTION));
+				dispatcher.forward(request, response);
+			} else {
+				response.sendError(404, "Impossible de trouver le collaborateur");
+			}
+		} else {
+			response.sendError(404, "Identifiant de collaborateur incorrecte");
+		}
+	}
+
+	private void doLister(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		List<Collaborateur> collaborateurs = collabService.listerCollaborateurs();
+		List<Departement> departements = depService.listerDepartement();
+		request.setAttribute("collaborateurs", collaborateurs);
+		request.setAttribute("departements", departements);
+
+		RequestDispatcher dispatcher = this.getServletContext()
+				.getRequestDispatcher("/WEB-INF/views/" + routes.get(LISTER_ACTION));
+		dispatcher.forward(request, response);
 	}
 }

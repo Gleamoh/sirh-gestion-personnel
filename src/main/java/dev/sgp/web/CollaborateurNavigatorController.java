@@ -15,12 +15,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dev.sgp.entite.Collaborateur;
+import dev.sgp.entite.Departement;
+import dev.sgp.service.CollaborateurService;
+import dev.sgp.service.DepartementService;
+import dev.sgp.util.Constantes;
 import dev.sgp.util.RequestChecker;
 
 /**
  * Servlet implementation class EditerCollaborateurController
  */
 public class CollaborateurNavigatorController extends HttpServlet {
+	
+	public static CollaborateurService collabService = Constantes.COLLAB_SERVICE;
+	public static DepartementService depService = Constantes.DEP_SERVICE;
+	
 	public static final String CREER_ACTION = "creer";
 	public static final String MODIFIER_ACTION = "modifier";
 	public static final String LISTER_ACTION = "lister";
@@ -70,8 +78,8 @@ public class CollaborateurNavigatorController extends HttpServlet {
 			}
 			case MODIFIER_ACTION: {
 				String param = request.getParameter("id");
-				if (false == RequestChecker.isNullOrEmptyParameterId(param)) {
-					request.setAttribute("collaborateur", getCollaborateur(RequestChecker.parameterToInt(param)));
+				if (false == RequestChecker.isNullOrEmptyParameter(param)) {
+					request.setAttribute("collaborateur", getCollaborateur(param));
 					RequestDispatcher dispatcher = this.getServletContext()
 							.getRequestDispatcher("/WEB-INF/views/" + routes.get(requestAction));
 					dispatcher.forward(request, response);
@@ -82,8 +90,10 @@ public class CollaborateurNavigatorController extends HttpServlet {
 			}
 			case LISTER_ACTION: {
 				
-				List<Collaborateur> list = CollaborateurProcessController.collabService.listerCollaborateurs();
-				request.setAttribute("list", list);
+				List<Collaborateur> collaborateurs = collabService.listerCollaborateurs();
+				List<Departement> departements = depService.listerDepartement();
+				request.setAttribute("collaborateurs", collaborateurs);
+				request.setAttribute("departements", departements);
 				
 				RequestDispatcher dispatcher = this.getServletContext()
 						.getRequestDispatcher("/WEB-INF/views/" + routes.get(requestAction));
@@ -123,7 +133,7 @@ public class CollaborateurNavigatorController extends HttpServlet {
 	 * @param id
 	 * @return : Collaborateur
 	 */
-	private Collaborateur getCollaborateur(int id) {
+	private Collaborateur getCollaborateur(String id) {
 		return new Collaborateur();
 	}
 

@@ -1,4 +1,6 @@
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="dev.sgp.entite.Departement"%>
 <%@page import="dev.sgp.entite.Collaborateur"%>
 <%@page import="java.util.List"%>
 
@@ -43,9 +45,12 @@
 			<div class="col-12 col-lg-4">
 				<select class="custom-select">
 					<option selected>Tous</option>
-					<option value="1">Comptabilité</option>
-					<option value="2">Ressources Humaines</option>
-					<option value="3">Informatique</option>
+					<%
+						List<Departement> departements = (List<Departement>)request.getAttribute("departements");
+						for(Departement d : departements) {
+					%>
+					<option value="<%= d.getId()%>"><%= d.getName() %></option>
+					<% } %>
 				</select>
 			</div>
 
@@ -59,8 +64,8 @@
 		<div class="mx-5 mt-5">
 			<div class="row">
 				<%
-					List<Collaborateur> list = (List<Collaborateur>) request.getAttribute("list");
-					for (Collaborateur c : list) {
+					List<Collaborateur> collaborateurs = (List<Collaborateur>) request.getAttribute("collaborateurs");
+					for (Collaborateur c : collaborateurs) {
 				%>
 
 				<!-- card -->
@@ -96,7 +101,7 @@
 										</div>
 										<div class="col-12 col-lg-3">
 											<a
-												href="<%=request.getContextPath()%>/collaborateur/editer?id=<%=c.getMatricule()%>"
+												href="<%=request.getContextPath()%>/collaborateurs/modifier?id=<%=c.getMatricule()%>"
 												class="btn btn-primary btn-sm mt-2">Editer</a>
 										</div>
 									</div>

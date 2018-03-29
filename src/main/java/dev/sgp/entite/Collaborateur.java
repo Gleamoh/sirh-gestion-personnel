@@ -32,7 +32,10 @@ public class Collaborateur {
 	private LocalDateTime dateHeureCreation;
 	/** estActif : Boolean */
 	private Boolean estActif;
-	
+	/** intitulePoste : String */
+	private String intitulePoste;
+	/** departement : Departement */
+	private Departement departement;
 	
 	/** Constructor
 	 * 
@@ -198,6 +201,38 @@ public class Collaborateur {
 	 */
 	public void setEstActif(Boolean estActif) {
 		this.estActif = estActif;
+	}
+
+
+	/** Getter
+	 * @return the intitulePoste
+	 */
+	public String getIntitulePoste() {
+		return intitulePoste;
+	}
+
+
+	/** Setter
+	 * @param intitulePoste the intitulePoste to set
+	 */
+	public void setIntitulePoste(String intitulePoste) {
+		this.intitulePoste = intitulePoste;
+	}
+
+
+	/** Getter
+	 * @return the departement
+	 */
+	public Departement getDepartement() {
+		return departement;
+	}
+
+
+	/** Setter
+	 * @param departement the departement to set
+	 */
+	public void setDepartement(Departement departement) {
+		this.departement = departement;
 	}
 
 }

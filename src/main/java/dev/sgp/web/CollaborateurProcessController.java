@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import dev.sgp.entite.Collaborateur;
 import dev.sgp.service.CollaborateurService;
+import dev.sgp.service.DepartementService;
 import dev.sgp.util.Constantes;
 import dev.sgp.util.RequestChecker;
 
@@ -24,6 +25,7 @@ import dev.sgp.util.RequestChecker;
 public class CollaborateurProcessController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public static CollaborateurService collabService = Constantes.COLLAB_SERVICE;
+	public static DepartementService depService = Constantes.DEP_SERVICE;
 	private final int SECU_LENGTH = 15;
 	private final String DEFAULT_IMAGE = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAMAAABHPGVmAAAAPFBMVEV/wMT////P5+m3296XzM+HxMef0NPf7/D3+/vX6+zn8/T7/f2PyMvv9/jH4+Wv19qn1NbA4OLM5uek0tVM7mriAAAESElEQVRogb1a2aKrIAxEdvfq+f9/vaUWZclia6/zdk7VgQSSTEA0J+EmZbXYoa2a3Nl3xZmHWpV8PoVW7U9IvHzABBEP6S+SuNnQFAFmZgxHkkjLM2yw8ksSOZylCBgIGpTEnZ7FPhvUaAiJV59SBChkCcAk7Ql3QzDwioZIvpsGMRmAZER23jno8QxJ96WpIkzHk8hrFAHVYi5JfsBRs4j/wFGxiI84jFZr265Kc36TOAnN8WRwYx+e671bGB6JkXTka2UMbC1J08EkI/WSWZoKExVBzQiReGoPDmDw66hXtAdIqFii6w22TZ4K1aomaal5IBxMCNqjZSTxhEMMkV2pIGSiwSIJZSyFMQSsJ158kzjiUU1WIz3lFpeRUE9OFAed4GxKQm31oadJyAHKhITaVaRHAiZqhAcJNREkbScgs5zcSagJD2wR2lB7xUYSamlF31Egi2X3Jpmph2aehCxu5o2E2uynSBbq/bDtBZeqrpIE1wvGpJfNJR4vEvKR8AwH0qciMJAx/gnNk/zRX2ifJEzhOwBlZ46e0THqScJUvhd3vAi2EIxLLsauFxpBbvdtIAxYSeYEOw7OXh0rLSfBCx5mEfMfUILXn3DNFTHyGtmKE7LqQeXGE9LvlHIzhER3F3VZMhQ0cfmP1T4O1GAXdHINoKYPYNf/D1io6vE7lsov/fQzp+94FCz9T/3xwt/SFs7v3cT09D6DWdyWVfxbqHTxz+WjnhhFMY1xEl4Ns1KzPkw3nmq9sXtepalx02+Z8vIL53/NBUjrclcELVqqu45J8pYO9WaptvoCVEnMYlZk0hrqfBWUKNBsIlt9E5V+IWH9KjcB7UVJekcUEhYohvxra0DdOULSEyWRheL7e95Q2kejvsaLO2i0eygBQz/WOFBomQo3IfYeD/grUre0WMGN1EH7gOD8Aq8xVDrAHzkaA4iShJTKAxNBSFJPum7wTKF2lkTkHNaxSdbIH/xEXby85VwtYpCaMRsN0p2qbP8WppXEBsLGC1lKR0qLSkdEiV3W5Ygp8m2LtVyKiLw3C0rXr/Drhb2RsrKoYI62R97AwQRc4TqkVZEX4EkDJ5+Kgg1RLkLEc302lrQVlXkFET1VjEPWYBqmsqZatsCQ6rpa6Mj68MkjeXswHSf8buPLdYNp78Tw8T/xE4fFkcVVsKAcx/KqWraJKVHNkyY/MN0EyGO0VfM5NZjB+qcHC9ZXb5K6BWijZxHUrvAyjiwIR7+mc4UOBLKjDaPnFjIIUEHug2zn9OAGPtooD2nMYJXsyhkFlmoefScXO+SbFTmkAdKXeTLNampdN3rf9xvLNo++937sXDup+fn9Ko2gx01Ep9AM+sm2TJN0y9LKdV3U/NADWjcSB2f3HAHec5h5z7HsPQfM9xyV33Po39xyfeHryXx2EaO55UpJwA2XY140//+aT8ANF5YCbrh6teG/XyKLuHId7h+wGSazJu6dgAAAAABJRU5ErkJggg==";
 	private static final String METHOD_DELETE = "DELETE";
@@ -118,7 +120,7 @@ public class CollaborateurProcessController extends HttpServlet {
 			collaborateur.setPrenom(params.get("prenom"));
 
 			// générer le matricule
-			String matricule = (params.get("nom") + " " + params.get("nom") + params.get("date")).toUpperCase();
+			String matricule = (params.get("nom") + "-" + params.get("nom") + params.get("date")).toUpperCase();
 			collaborateur.setMatricule(matricule);
 
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

@@ -5,12 +5,12 @@
 	<section class="mt-3 mx-5">
 		<h1>Nouveau collaborateur</h1>
 		<div class="container mt-4">
-			<form onsubmit="createCollaborateurProcess(event);"
+			<form onsubmit="createCollaborateurProcess(event);" action="<%= request.getContextPath() %>/collaborateurs-process" method="post"
 				class="needs-validation" novalidate>
 				<div class="form-group row">
 					<label for="input-nom" class="col-sm-3 col-form-label">Nom</label>
 					<div class="col-sm-9">
-						<input type="text" class="form-control" id="input-nom"
+						<input type="text" class="form-control" id="input-nom" name="input-nom"
 							placeholder="Nom" required>
 						<div class="invalid-feedback">Le nom est obligatoire</div>
 					</div>
@@ -18,7 +18,7 @@
 				<div class="form-group row">
 					<label for="input-prenom" class="col-sm-3 col-form-label">Prénom</label>
 					<div class="col-sm-9">
-						<input type="text" class="form-control" id="input-prenom"
+						<input type="text" class="form-control" id="input-prenom" name="input-prenom"
 							placeholder="Prénom" required>
 						<div class="invalid-feedback">Le prénom est obligatoire</div>
 					</div>
@@ -27,7 +27,7 @@
 					<label for="input-date" class="col-sm-3 col-form-label">Date
 						de naissance</label>
 					<div class="col-sm-9">
-						<input type="date" class="form-control" id="input-date"
+						<input type="date" class="form-control" id="input-date" name="input-date"
 							placeholder="... au format 31/12/2017" required>
 						<div class="invalid-feedback">La date de naissance est
 							obligatoire</div>
@@ -36,7 +36,7 @@
 				<div class="form-group row">
 					<label for="input-adresse" class="col-sm-3 col-form-label">Adresse</label>
 					<div class="col-sm-9">
-						<textarea class="form-control" id="input-adresse" rows="3"
+						<textarea class="form-control" id="input-adresse" name="input-adresse" rows="3"
 							placeholder="Adresse" required></textarea>
 						<div class="invalid-feedback">L'adresse est obligatoire</div>
 					</div>
@@ -46,7 +46,7 @@
 						de sécurité sociale</label>
 					<div class="col-sm-9">
 						<input type="text" maxlength="15" class="form-control"
-							id="input-secu" placeholder="Numéro de sécurité sociale"
+							id="input-secu" name="input-secu" placeholder="Numéro de sécurité sociale"
 							required>
 						<div class="invalid-feedback">Le numéro de sécurité sociale
 							est obligatoire</div>
@@ -106,10 +106,8 @@
 					</div>
 				</div>
 			</div>
-
-
 		</div>
 	</section>
 
-	<%@ include file="/WEB-INF/views/templates/scripts.jsp"%>
+	<%-- <%@ include file="/WEB-INF/views/templates/scripts.jsp"%> --%>
 	<%@ include file="/WEB-INF/views/templates/base-footer.jsp"%>

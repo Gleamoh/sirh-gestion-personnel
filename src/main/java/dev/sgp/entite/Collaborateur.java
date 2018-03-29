@@ -4,7 +4,7 @@
 package dev.sgp.entite;
 
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 /**
  * @author Kevin M.
@@ -28,8 +28,8 @@ public class Collaborateur {
 	private String photo;
 	/** dateNaissance : LocalDate */
 	private LocalDate dateNaissance;
-	/** dateHeureCreation : ZonedDateTime */
-	private ZonedDateTime dateHeureCreation;
+	/** dateHeureCreation : LocalDateTime */
+	private LocalDateTime dateHeureCreation;
 	/** estActif : Boolean */
 	private Boolean estActif;
 	
@@ -172,7 +172,7 @@ public class Collaborateur {
 	/** Getter
 	 * @return the dateHeureCreation
 	 */
-	public ZonedDateTime getDateHeureCreation() {
+	public LocalDateTime getDateHeureCreation() {
 		return dateHeureCreation;
 	}
 
@@ -180,7 +180,7 @@ public class Collaborateur {
 	/** Setter
 	 * @param dateHeureCreation the dateHeureCreation to set
 	 */
-	public void setDateHeureCreation(ZonedDateTime dateHeureCreation) {
+	public void setDateHeureCreation(LocalDateTime dateHeureCreation) {
 		this.dateHeureCreation = dateHeureCreation;
 	}
 

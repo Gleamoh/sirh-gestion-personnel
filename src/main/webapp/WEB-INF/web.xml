@@ -6,39 +6,27 @@
 	<display-name>Archetype Created Web Application</display-name>
 
 	<servlet>
-		<servlet-name>ListerCollaborateurController</servlet-name>
-		<display-name>ListerCollaborateurController</display-name>
+		<servlet-name>CollaborateurNavigatorController</servlet-name>
+		<display-name>CollaborateurNavigatorController</display-name>
 		<description></description>
-		<servlet-class>dev.sgp.web.ListerCollaborateurController</servlet-class>
+		<servlet-class>dev.sgp.web.CollaborateurNavigatorController</servlet-class>
 	</servlet>
 
 	<servlet>
-		<servlet-name>EditerCollaborateurController</servlet-name>
-		<display-name>EditerCollaborateurController</display-name>
+		<servlet-name>CollaborateurProcessController</servlet-name>
+		<display-name>CollaborateurProcessController</display-name>
 		<description></description>
-		<servlet-class>dev.sgp.web.EditerCollaborateurController</servlet-class>
-	</servlet>
-
-	<servlet>
-		<servlet-name>CreerCollaborateurController</servlet-name>
-		<display-name>CreerCollaborateurController</display-name>
-		<description></description>
-		<servlet-class>dev.sgp.web.CreerCollaborateurController</servlet-class>
+		<servlet-class>dev.sgp.web.CollaborateurProcessController</servlet-class>
 	</servlet>
 	
 	<servlet-mapping>
-		<servlet-name>ListerCollaborateurController</servlet-name>
-		<url-pattern>/collaborateurs/lister</url-pattern>
+		<servlet-name>CollaborateurNavigatorController</servlet-name>
+		<url-pattern>/collaborateurs/*</url-pattern>
 	</servlet-mapping>
+
 
 	<servlet-mapping>
-		<servlet-name>EditerCollaborateurController</servlet-name>
-		<url-pattern>/collaborateurs/editer</url-pattern>
+		<servlet-name>CollaborateurProcessController</servlet-name>
+		<url-pattern>/collaborateurs-process/*</url-pattern>
 	</servlet-mapping>
-
-	<servlet-mapping>
-		<servlet-name>CreerCollaborateurController</servlet-name>
-		<url-pattern>/collaborateurs/creer</url-pattern>
-	</servlet-mapping>
-
 </web-app>

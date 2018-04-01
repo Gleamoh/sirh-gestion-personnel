@@ -37,7 +37,7 @@ public class RequestChecker {
 		message += defaultMessage;
 
 		for (Map.Entry<String, String> p : params.entrySet()) {
-			if (RequestChecker.isNullOrEmptyParameter(p.getValue())) {
+			if (RequestChecker.isNullOrEmptyParameter(p.getValue()) && !p.getKey().equals("active")) {
 				message += p.getKey() + ", ";
 			}
 		}

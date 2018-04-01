@@ -21,24 +21,26 @@
 				alt="photo">
 		</div>
 		<div class="col-12 col-lg-9">
-			<div class="row">
-				<div class="col-12 col-lg-6">
-					<h1>Nom Prénom - Matricule</h1>
-				</div>
-				<div class="col-12 col-lg-6 mt-3">
-					<div class="custom-control custom-checkbox">
-						<input type="checkbox" class="custom-control-input"
-							id="customCheck1" name="input-active" value="1" <%= c.getEstActif() ? "" : "checked" %>> <label
-							class="custom-control-label" for="customCheck1">Désactiver</label>
-					</div>
-				</div>
-			</div>
-
 			<form id="edit-form" class="needs-validation" method="post"
 				action="<%=request.getContextPath()%>/collaborateurs-process"
 				novalidate>
-				<input type="hidden" name="_method" value="PUT" form="edit-form"/>
-				<input type="hidden" name="_matricule" value="<%= c.getMatricule() %>" form="edit-form"/>
+				<div class="row">
+					<div class="col-12 col-lg-6">
+						<h1>Nom Prénom - Matricule</h1>
+					</div>
+					<div class="col-12 col-lg-6 mt-3">
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input"
+								id="customCheck1" form="edit-form" name="input-active" value="1"
+								<%=c.getEstActif() ? "" : "checked"%>> <label
+								class="custom-control-label" for="customCheck1">Désactiver</label>
+						</div>
+					</div>
+				</div>
+
+				<input type="hidden" name="_method" value="PUT" form="edit-form" />
+				<input type="hidden" name="_matricule"
+					value="<%=c.getMatricule()%>" form="edit-form" />
 				<div id="accordion">
 					<div class="card">
 						<div class="card-header" id="headingOne">
@@ -158,8 +160,8 @@
 									<div class="col-sm-9">
 										<input form="edit-form" type="text" class="form-control"
 											id="input-nom-poste" name="input-nom-poste"
-											placeholder="Nom du poste"
-											value="<%=c.getIntitulePoste()%>" required>
+											placeholder="Nom du poste" value="<%=c.getIntitulePoste()%>"
+											required>
 										<div class="invalid-feedback">Le nom du poste est
 											obligatoire</div>
 									</div>

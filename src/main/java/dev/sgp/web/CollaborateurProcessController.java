@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -142,7 +141,7 @@ public class CollaborateurProcessController extends HttpServlet {
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		Map<String, String> params = new HashMap<>();
-
+		
 		params.put("adresse", req.getParameter("input-adresse").trim());
 		params.put("intitulePoste", req.getParameter("input-nom-poste").trim());
 		params.put("idDepartement", req.getParameter("input-dep").trim());
@@ -150,6 +149,7 @@ public class CollaborateurProcessController extends HttpServlet {
 		params.put("bic", req.getParameter("input-bic").trim());
 		params.put("iban", req.getParameter("input-iban").trim());
 		params.put("phone", req.getParameter("input-tel").trim());
+		params.put("secu", req.getParameter("input-secu").trim());
 		params.put("active", req.getParameter("input-active"));
 		params.put("matricule", req.getParameter("_matricule").trim());
 
@@ -173,15 +173,13 @@ public class CollaborateurProcessController extends HttpServlet {
 				c.setDepartement(optionalDep.isPresent() ? optionalDep.get() : null);
 
 				c.setIban(params.get("iban"));
+				c.setBic(params.get("bic"));
 				c.setIntitulePoste(params.get("intitulePoste"));
 				c.setPhone(params.get("phone"));
-				c.setEstActif(params.get("estActif").equals("0") ? false : true);
+				c.setEstActif(params.get("active") == null ? true : false);
 			}
+			resp.sendRedirect("collaborateurs/lister");
 		}
-		
-		resp.getWriter().write("");
-		resp.sendRedirect("collaborateurs/lister");
-
 	}
 
 	/*
